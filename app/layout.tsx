@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-
+import { ThemeProvider } from "@/components/providers/theme-providers";
 const font = Open_Sans({ subsets: ["latin"] });
+
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,7 +20,15 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={font.className}>{children}</body>
+        <body className={cn(font.className, "bg-white dark:bg-[#313338]")}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            storageKey="discord-theme"
+            enableSystem={false}>
+            {children}
+          </ThemeProvider>
+        </body>
       </html>
     </ClerkProvider>
   );
